@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>标签管理</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="/admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
+</nav>
+<!--二级导航-->
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/admin/tags/input}" class="item">发布</a>
+            <a href="#" th:href="@{/admin/tags}" class="teal active item">列表</a>
+        </div>
+    </div>
+</div>
+<!--中间内容-->
+<div class="m-padded-tb-large m-container-small">
+    <div class="ui container">
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示</div>
+            <p th:text="${message}">占位符</p>
+        </div>
+        <form action="" method="post" class="ui segment form">
+            <!--文章表格-->
+            <table class="ui center aligned celled table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>名称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--1-->
+                <tr th:each="tag,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${tag.name}">摇摇猪的养殖</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/tags/{id}/input(id=${tag.id})}" class="ui mini teal button">编辑</a>
+                        <a href="#" th:href="@{/admin/tags/{id}/delete(id=${tag.id})}" class="ui mini red button">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6" >
+                        <div class="ui left floated pagination menu">
+                            <a href="#" th:href="@{/admin/tags(page=${page.number}-1)}" th:unless="${page.first}" class="icon item">
+                                <i class="left chevron icon"></i>
+                            </a>
+                            <a href="#" th:href="@{/admin/tags(page=${page.number}+1)}" th:unless="${page.last}" class="icon item">
+                                <i class="right chevron icon"></i>
+                            </a>
+                        </div>
+                        <a href="#" th:href="@{/admin/tags/input}" class="ui mini right floated teal basic button">新增</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</div>
+<!--底部front-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/css/semantic.min.css"></script>
+<script>
+    $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    //下拉菜单初始化
+    $('.ui.dropdown').dropdown();
+    $('.message .close').on('click',function (){
+        $(this).closest('.message').transition('fade');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>关于我</title>
+</head>
+<body>
+    <!--导航-->
+    <nav th:replace="_fragments :: menu(5)" class="ui inverted attached segment m-padded-tb-mini" ></nav>
+    <!--中间内容-->
+    <div class="m-padded-tb m-container-small">
+        <div class="ui container">
+            <div class="ui grid">
+                <div class="eleven wide column">
+                    <img src="/images/blank.jpg" alt="" class="ui rounded image">
+                </div>
+                <div class="five wide column">
+                    <div class="ui top attached segment">
+                        <div class="ui header">关于我</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <p class="m-text">摇摇猪</p>
+                        <p class="m-text">yyds</p>
+                    </div>
+                    <!--hobby labels-->
+                    <div class="ui attached segment">
+                        <labels>
+                            <div class="ui orange basic label m-margin-tb-tiny">画画</div>
+                            <div class="ui orange basic label m-margin-tb-tiny">写作</div>
+                            <div class="ui orange basic label m-margin-tb-tiny">哲学</div>
+                            <div class="ui orange basic label m-margin-tb-tiny">游戏</div>
+                            <div class="ui orange basic label m-margin-tb-tiny">编程</div>
+                        </labels>
+                    </div>
+                    <!--技术labels-->
+                    <div class="ui attached segment">
+                        <labels>
+                            <div class="ui teal basic label m-margin-tb-tiny">Java</div>
+                            <div class="ui teal basic label m-margin-tb-tiny">Unity</div>
+                            <div class="ui teal basic label m-margin-tb-tiny">C#</div>
+                            <div class="ui teal basic label m-margin-tb-tiny">C++</div>
+                            <div class="ui teal basic label m-margin-tb-tiny">...</div>
+                        </labels>
+                    </div>
+                    <!--link-->
+                    <div class="ui bottom attached segment">
+                        <a href="#" class="ui circular icon button"><i class="large heart icon"></i></a>
+                        <a href="#" class="ui wechat circular icon button"><i class="large star icon"></i></a>
+                        <a href="#" class="ui qq circular icon button" data-content="1492938773" data-position="bottom center"><i class="large book icon"></i></a>
+                    </div>
+                    <div class="ui wechat-qr flowing popup transition hidden">
+                        <img src="/images/me.jpg" alt="" class="ui rounded image" style="width: 100px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--底部front-->
+    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/css/semantic.min.css"></script>
+<script>
+    $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.qq').popup();
+    $('.wechat').popup({
+        popup:$('.wechat-qr'),
+        on:'click',
+        //position:'bottom center'
+    });
+    $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+</script>
+</body>
+</html>

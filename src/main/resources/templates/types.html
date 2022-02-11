@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>博客详情</title>
+</head>
+<body>
+    <!--导航-->
+    <nav th:replace="_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini" ></nav>
+    <!--中间内容-->
+    <div class="m-padded-tb-large m-container-small">
+        <div class="ui container">
+            <!--header-->
+            <div class="ui top segment">
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <h3 class="ui teal header">分类</h3>
+                    </div>
+                    <div class="column right aligned m-padded-right">
+                        共<h3 class="ui orange header m-inline-block" th:text="${#arrays.length(types)}">14</h3>个
+                    </div>
+                </div>  
+            </div>
+            <!--tags-->
+            <div class="ui attached segment">
+                <div class="ui labeled button m-margin-tb-tiny" th:each="type : ${types}">
+                    <a href="#" th:href="@{/types/{id}(id=${type.id})}" class="ui basic button" th:classappend="${type.id==activeTypeId} ? 'red'" th:text="${type.name}">摇摇猪的饲养</a>
+                    <div class="ui pink left pointing label" th:classappend="${type.id==activeTypeId} ? 'pink'" th:text="${#arrays.length(type.blogs)}">14</div>
+                </div>
+            </div>
+            <div class="ui teal segment">
+                <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}">
+                    <div class="ui middle aligned mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header" ><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}">你真的理解什么是财富自由吗?</a></h3>
+                            <p class="m-text" th:text="|${blog.description}......|">正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <!--horizontal:平着的、mini:小一点-->
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <!--avatar image:圆形的图片-->
+                                            <img src="/images/head.jpg"   alt="" class="ui avatar image">
+                                            <div class="content"><a herf="#" class="header" >摇摇猪</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <!--calendar icon:时间的图标-->
+                                            <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020/10/1</span>
+                                        </div>
+                                        <div class="item">
+                                            <!--eye icon:眼睛的图标-->
+                                            <i class="eye icon"></i><span th:text="${blog.views}">2200</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--right aligned:靠右、teal:颜色、basic:边线试感觉-->
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin" th:text="${blog.type.name}">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                                <!--rounded:圆角的-->
+                                <img src="https://picsum.photos/id/16/800/450" th:src="@{${blog.firstPicture}}" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--分页-->
+            <!--bottom attached:把两个连成一个-->
+            <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <a href="#" th:href="@{/types/{id}?page={page}(id=${activeTypeId},page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
+                    </div>
+                    <div class="right aligned column">
+                        <a href="#" th:href="@{/types/{id}?page={page}(id=${activeTypeId},page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--底部front-->
+    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/css/semantic.min.css"></script>
+<script>
+    $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+</script>
+</body>
+</html>

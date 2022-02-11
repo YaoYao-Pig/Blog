@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>Login</title>
+</head>
+<body>
+    <div class="">
+        <div class="ui container">
+            <form class="ui large form" method="post" action="#" th:action="@{/admin/login}">
+                <div>
+                    username
+                    <input type="text" name="username">
+                </div>
+                <div>
+                    password
+                    <input type="text" name="password">
+                </div>
+                <button class="ui fluid large teal submit button"><i class="heart icon"></i>submit</button>
+                <div class="ui mini error message"></div>
+                <div class="ui mini message" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+            </form>
+        </div>
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/semantic.min.js"></script>
+    <script src="/css/semantic.min.css"></script>
+    <script>
+        $('.ui.form').form({
+            fields:{
+                username:{
+                    identifier:'username',
+                    rules:[{
+                        type:'empty',
+                        prompt:'请输入用户名'
+                    }]
+                },
+                password:{
+                    identifier:'password',
+                    rules:[{
+                        type:'empty',
+                        prompt:'请输入密码'
+                    }]
+                }
+            }
+
+        });
+    </script>
+</body>
+</html>

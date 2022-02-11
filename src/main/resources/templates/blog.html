@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>博客详情</title>
+</head>
+<body>
+    <!--导航-->
+    <nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini" ></nav>
+    <!--中间内容-->
+    <div class="m-padded-tb-large m-container-small animate__animated animate__fadeIn">
+        <div class="ui container">
+            <div class="ui top attched segment">
+                <!--head-->
+                <div class="ui m-padded-top horizontal link list">
+                    <div class="item ">
+                        <img src="/images/head.jpg" alt="#" class="ui avatar image">
+                        <div class="content"><a href="#" class="header">摇摇猪</a></div>
+                    </div>
+                    <div class="item">
+                        <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2022-02-07</span>
+                    </div>
+                    <div class="item">
+                        <i class="eye icon"></i><span th:text="${blog.views}">2233</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui attached padded segment">
+                <!-- 图片区域 -->
+                <img src="/images/blank.jpg" th:src="@{${blog.firstPicture}}" alt="" class="ui fluid rounded image">
+            </div>
+            <div class="ui attached segment">
+                <!-- 内容区域 -->
+                <div class="ui right aligned basic segment">
+                    <div class="ui orange basic label" th:text="${blog.flag}">原创</div>
+                </div>
+                <!--正文-->
+                <h2 class="ui header center aligned" th:text="${blog.title}">摇摇猪语录(1)</h2>
+                <div id="content" class="typo typo-selection js-toc-content m-padded-lr m-padded-tb-large" th:utext="${blog.content}">
+                    <!--Content-->
+                </div>
+                <!--label-->
+                <div class="m-padded-lr m-padded-tb-large">
+                    <div class=" ui  basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法论</div>
+                </div>
+                <!--give Star-->
+                <div class="ui center aligned basic segment">
+                    <button id="starButton" class="ui red basic circular button">Star</button>
+                </div>
+                <div class="ui m-star flowing popup transition hidden">
+                    <div class="ui red basic label">
+                        <div class="ui images" style="font-size: inherit !important;">
+                            <img src="/images/githubBinary.png" alt="" class="ui rounded bordered images" style="width: 120px;">
+                            <div class="ui center aligned basic m-padded-mini segment"><p>GitHub</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui attached positive message">
+                <!-- 博客信息 -->
+            <div class="ui middle aligned grid">
+                <div class="eleven wide column">
+                    <ui class="list">
+                        <li>作者：摇摇猪 </li>
+                        <li>时间：<span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}"></span></li>
+                        <li>版权</li>
+                        <li>摇摇乐</li>
+                    </ui>
+                </div>
+                <div class="five wide column">
+                    <img src="/images/me.jpg" class="ui right floated rounded bordered image" style="width: 110px;">
+                </div>
+            </div>
+            </div>
+            <!--留言区-->
+            <div class="ui bottom attched segment">
+                <!-- 留言区域列表 -->
+                <div id="comment-container"  class="ui teal segment">
+                    <div th:fragment="commentList">
+                        <div class="ui comments">
+                            <h3 class="ui dividing header">Comments</h3>
+                            <div class="comment" th:each="comment : ${blog?.comments} ">
+                                <a class="avatar" one-link-mark="yes">
+                                    <img src="/images/visitor.jpg" >
+                                </a>
+                                <div class="content">
+                                    <a class="author" th:text="${comment?.nickname}" one-link-mark="yes">Matt</a>
+                                    <div class="metadata">
+                                        <span class="date" th:text="${#dates.format(comment?.createTime,'yyyy-MM-dd HH:mm')}">今天下午 5:42</span>
+                                    </div>
+                                    <div class="text" th:text="${comment?.content}">太赞了！ </div>
+                                    <div class="actions">
+                                        <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment?.id},data-commentnickname=${comment?.nickname}" onclick="reply(this)">Reply</a>
+                                    </div>
+                                </div>
+                                <div class="comments" th:if="${#arrays.length(comment.replyComments)}>0">
+                                    <div class="comment" th:each="reply : ${comment.replyComments} ">
+                                        <a class="avatar" one-link-mark="yes">
+                                            <img src="/images/visitor.jpg" >
+                                        </a>
+                                        <div class="content">
+                                            <a class="author" th:text="${reply?.nickname}" one-link-mark="yes">
+                                                <span th:text="${reply?.nickname}">Matt</span>
+                                                <span class="ui teal" th:text="|@ ${reply?.parentComment.?nickname}|">小白</span>
+                                            </a>
+                                            <div class="metadata">
+                                                <span class="date" th:text="${#dates.format(reply?.createTime,'yyyy-MM-dd HH:mm')}">今天下午 5:42</span>
+                                            </div>
+                                            <div class="text" th:text="${reply?.content}">太赞了！ </div>
+                                            <div class="actions">
+                                                <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply?.id},data-commentnickname=${reply?.nickname}" onclick="reply(this)">Reply</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- 提交留言区域 -->
+                <div id="comment-form" class="ui form">
+                    <input type="hidden" name="blog.id" th:value="${blog.id}">
+                    <input type="hidden" name="parentComment.id" value="-1">
+                    <div class="field">
+                        <textarea name="content" placeholder="请输入评论信息" id="" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="fields">
+                        <!-- name -->
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="nickname" placeholder="姓名">
+                            </div>
+                        </div>
+                        <!-- email -->
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="mail icon"></i>
+                                <input type="text" name="email" placeholder="邮箱">
+                            </div>
+                        </div>
+                        <!--submiit button-->
+                        <div class="field">
+                            <button id="commentpost-btn" type="button" class="ui green button"><i class="edit icon"></i>发布</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--工具条-->
+    <div class="m-fixed m-right-bottom m-padded">
+        <div class="ui vertical icon buttons ">
+            <button type="button" class="ui tocButton teal button">目录</button>
+            <a href="#comment-container" class="ui teal button">留言</a>
+            <button type="button" class="ui wechat icon button"><i class="heart icon"></i></button>
+            <a href="#" class="ui button"><i class="chevron up icon"></i></a>
+        </div>
+    </div>
+    <div class="ui toc-container flowing popup transition hidden" style="width: 250px !important;">
+        <ol class="js-toc"></ol>
+    </div>
+    <div class="ui wechat-qr flowing popup transition hidden" style="width:130px">
+        <img src="/images/me.jpg" alt="" class="ui rounded image" style="width: 120px;">
+    </div>
+    <!--底部front-->
+    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/lib/prism/prism.js"></script>
+<script src="/lib/tocbot/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.js-toc-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+    $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+
+    });
+    $('#starButton').popup({
+        popup:$('.m-star.popup'),
+        on:'click',
+        position:'bottom center'
+    });
+    $('.tocButton.button').popup({
+        popup:$('.toc-container.popup'),
+        on:'click',
+        position:'left center'
+    });
+    $('.wechat').popup({
+        popup:$('.wechat-qr'),
+        on:'click',
+        position:'left center'
+    });
+    //评论表单验证
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'content',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入评论内容'
+                }
+                ]
+            },
+            content: {
+                identifier: 'nickname',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入你的名字'
+                }]
+            },
+            type: {
+                identifier: 'email',
+                rules: [{
+                    type: 'email',
+                    prompt: '请填写正确的邮箱地址'
+                }]
+            }
+        }
+    });
+    $('#commentpost-btn').click(function (){
+        var boo= $('.ui.form').form('validate form');
+        if(boo){
+            postData();
+        }else{
+            console.log('评论校验失败');
+        }
+    });
+    function postData(){
+        $("#comment-container").load(/*[[@{/comments}]]*/"/comments",{
+            "parentComment.id" : $("[name='parentComment.id']").val(),
+            "blog.id" : $("[name='blog.id']").val(),
+            "nickname": $("[name='nickname']").val(),
+            "email"   : $("[name='email']").val(),
+            "content" : $("[name='content']").val()
+        },function (responseTxt, statusTxt, xhr) {
+//        $(window).scrollTo($('#comment-container'),500);  提交后滚动到这个位置
+            clearContent();//提交成功后把表单内容清一下
+        });
+    }
+    function clearContent() {
+        $("[name='content']").val('');
+        $("[name='parentComment.id']").val(-1);
+        $("[name='content']").attr("placeholder", "请输入评论信息...");
+    }
+    function reply(obj) {
+        var commentId = $(obj).data('commentid');
+        var commentNickname = $(obj).data('commentnickname');
+        $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
+        $("[name='parentComment.id']").val(commentId);
+        $(window).scrollTo($('#comment-form'),500);
+    }
+    $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+</script>
+</body>
+</html>

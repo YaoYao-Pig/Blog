@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>分类新增</title>
+</head>
+<body>
+    <!--导航-->
+    <nav th:replace="/admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" ></nav>
+    <!--二级导航-->
+    <div class="ui attached pointing menu">
+        <div class="ui container">
+            <div class="right menu">
+                <a href="#" th:href="@{/admin/tags/input}" class="teal active item">发布</a>
+                <a href="#" th:href="@{/admin/tags}" class="item">列表</a>
+            </div>
+            </div>
+        </div>
+    <!--中间内容-->
+    
+    <div class="m-padded-tb-large m-container-small">
+        <div class="ui container">
+            <form action="#" method="post" th:object="${tag}" th:action="*{id}==null ? @{/admin/tags} : @{/admin/tags/{id}(id=*{id})}"  class="ui form">
+                <input type="hidden" name="id" th:value="*{id}">
+                <!--编辑-->
+                <div class="required field">
+                    <div class="ui left labeled input">
+                        <label class="ui teal basic label">名称</label>
+                        <input type="text" name="name" placeholder="标签名称">
+                    </div>
+                </div>
+                <!--错误提示-->
+                <div class="ui error message"></div>
+                <div class="ui right aligned container">
+                    <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                    <button class="ui teal submit button">提交</button>
+                </div>
+            </form>
+        </div>
+    
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!--底部front-->
+    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/css/semantic.min.css"></script>
+<script>
+    $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    //下拉菜单初始化
+    $('.ui.dropdown').dropdown();
+    $('.ui.form').form({
+        fields:{
+            title:{
+                identifier:'name',
+                rules:[{
+                    type:'empty',
+                    prompt:'请输入名称'
+                }]
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <title>归档</title>
+</head>
+<body>
+    <!--导航-->
+    <nav th:replace="_fragments :: menu(4)" class="ui inverted attached segment m-padded-tb-mini" ></nav>
+    <!--中间内容-->
+    <div class="m-padded-tb-large m-container-small">
+        <div class="ui container">
+            <!--header-->
+            <div class="ui top segment">
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <h3 class="ui teal header">归档</h3>
+                    </div>
+                    <div class="column right aligned m-padded-right">
+                        共<h3 class="ui orange header m-inline-block" th:text="${blogCount}">140</h3>篇博客
+                    </div>
+                </div>  
+            </div>
+            <!--blocks-->
+            <!--block-2022-->
+            <th:block th:each="item : ${archiveMap}">
+                <h2 class="ui center aligned header" th:text="${item.key}">2022</h2>
+                <div class="ui fluid vertical menu">
+                    <a href="#" target="_blank" class="item" th:each="blog : ${item.value}">
+                    <span>
+                        <i class="mini teal circle icon"></i><span th:text="${blog.title}">关于摇摇猪的烹饪方式</span>
+                        <div class="ui teal basic left pointing label" th:text="${#dates.format(blog.updateTime,'MMMdd')}">02月07</div>
+                    </span>
+                        <div class="ui orange basic left pointing label" th:text="${blog.flag}">原创</div>
+                    </a>
+                </div>
+            </th:block >
+
+        </div>
+
+    </div>
+    <!--底部front-->
+    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/semantic.min.js"></script>
+<script src="/css/semantic.min.css"></script>
+<script>
+    $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+</script>
+</body>
+</html>
