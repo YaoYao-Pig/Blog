@@ -1,0 +1,231 @@
+-- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+--
+-- Host: localhost    Database: blog
+-- ------------------------------------------------------
+-- Server version	5.7.36-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `hibernate_sequence`
+--
+
+DROP TABLE IF EXISTS `hibernate_sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hibernate_sequence`
+--
+
+LOCK TABLES `hibernate_sequence` WRITE;
+/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_blog`
+--
+
+DROP TABLE IF EXISTS `t_blog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_blog` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `appreciation` bit(1) NOT NULL,
+  `commentabled` bit(1) DEFAULT NULL,
+  `content` longtext COLLATE utf8_bin,
+  `create_time` datetime(6) DEFAULT NULL,
+  `first_picture` longtext COLLATE utf8_bin,
+  `flag` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `published` bit(1) NOT NULL,
+  `recommend` bit(1) NOT NULL,
+  `share_statement` bit(1) NOT NULL,
+  `title` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `views` int(11) DEFAULT NULL,
+  `type_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `commentable` bit(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `FK292449gwg5yf7ocdlmswv9w4j` (`type_id`) USING BTREE,
+  KEY `FK8ky5rrsxh01nkhctmo7d48p82` (`user_id`) USING BTREE,
+  CONSTRAINT `FK292449gwg5yf7ocdlmswv9w4j` FOREIGN KEY (`type_id`) REFERENCES `t_type` (`id`),
+  CONSTRAINT `FK8ky5rrsxh01nkhctmo7d48p82` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_blog`
+--
+
+LOCK TABLES `t_blog` WRITE;
+/*!40000 ALTER TABLE `t_blog` DISABLE KEYS */;
+INSERT INTO `t_blog` VALUES (11,_binary '',NULL,'1','2022-02-11 09:34:32.432000','/images/blank.jpg','原创',_binary '',_binary '',_binary '','测试文章二：Effective C++ ReadingNote','2022-02-11 09:34:32.432000',0,28,1,'关于EffectiveC++',_binary ''),(13,_binary '',NULL,'2','2022-02-11 16:47:16.955000','/images/firstPicture/1.jpeg','原创',_binary '',_binary '',_binary '','测试文章四：《God of War》的测评','2022-02-11 16:47:16.955000',0,25,1,'	战神系列的地位其实本来挺尴尬的。\r\n\r\n​	当时卡普空家两个鬼字辈的动作游戏风头无两，《战神》围绕着奇观级别的巨大敌人，颇有新意的榨红魂加上高水平的动作设计以及关卡设计，确实是走出了一条自己的路。',_binary '');
+/*!40000 ALTER TABLE `t_blog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_blog_tags`
+--
+
+DROP TABLE IF EXISTS `t_blog_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_blog_tags` (
+  `blogs_id` bigint(20) NOT NULL,
+  `tags_id` bigint(20) NOT NULL,
+  KEY `FK5feau0gb4lq47fdb03uboswm8` (`tags_id`) USING BTREE,
+  KEY `FKh4pacwjwofrugxa9hpwaxg6mr` (`blogs_id`) USING BTREE,
+  CONSTRAINT `FK5feau0gb4lq47fdb03uboswm8` FOREIGN KEY (`tags_id`) REFERENCES `t_tag` (`id`),
+  CONSTRAINT `FKh4pacwjwofrugxa9hpwaxg6mr` FOREIGN KEY (`blogs_id`) REFERENCES `t_blog` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_blog_tags`
+--
+
+LOCK TABLES `t_blog_tags` WRITE;
+/*!40000 ALTER TABLE `t_blog_tags` DISABLE KEYS */;
+INSERT INTO `t_blog_tags` VALUES (11,8),(11,11),(13,10);
+/*!40000 ALTER TABLE `t_blog_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_comment`
+--
+
+DROP TABLE IF EXISTS `t_comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_comment` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `avatar` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `content` longtext COLLATE utf8_bin,
+  `create_time` datetime(6) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `blog_id` bigint(20) DEFAULT NULL,
+  `parent_comment_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `FKke3uogd04j4jx316m1p51e05u` (`blog_id`) USING BTREE,
+  KEY `FK4jj284r3pb7japogvo6h72q95` (`parent_comment_id`) USING BTREE,
+  CONSTRAINT `FK4jj284r3pb7japogvo6h72q95` FOREIGN KEY (`parent_comment_id`) REFERENCES `t_comment` (`id`),
+  CONSTRAINT `FKke3uogd04j4jx316m1p51e05u` FOREIGN KEY (`blog_id`) REFERENCES `t_blog` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_comment`
+--
+
+LOCK TABLES `t_comment` WRITE;
+/*!40000 ALTER TABLE `t_comment` DISABLE KEYS */;
+INSERT INTO `t_comment` VALUES (9,'${comment.avatar','test1','2022-02-11 14:20:19.506000',NULL,'test1',11,NULL),(10,'${comment.avatar','llala','2022-02-11 14:20:27.039000',NULL,'test2',11,9),(11,'${comment.avatar','这是一条测试评论','2022-02-11 17:06:58.674000',NULL,'摇摇猪',13,NULL),(12,'${comment.avatar','评论区当前前存在BUG，发布评论后需要刷新页面才可显示','2022-02-11 17:07:29.737000',NULL,'摇摇猪',13,NULL),(13,'${comment.avatar','支持多级评论，但排版存在问题','2022-02-11 17:14:26.787000',NULL,'摇摇猪',13,12);
+/*!40000 ALTER TABLE `t_comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_tag`
+--
+
+DROP TABLE IF EXISTS `t_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_tag` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_tag`
+--
+
+LOCK TABLES `t_tag` WRITE;
+/*!40000 ALTER TABLE `t_tag` DISABLE KEYS */;
+INSERT INTO `t_tag` VALUES (7,'C#'),(8,'C++'),(9,'操作系统'),(10,'测评'),(11,'后端开发'),(12,'Java');
+/*!40000 ALTER TABLE `t_tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_type`
+--
+
+DROP TABLE IF EXISTS `t_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_type` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_type`
+--
+
+LOCK TABLES `t_type` WRITE;
+/*!40000 ALTER TABLE `t_type` DISABLE KEYS */;
+INSERT INTO `t_type` VALUES (25,'C#'),(26,'Unity'),(27,'随笔'),(28,'编程'),(29,'游戏'),(30,'哲学'),(31,'辩论');
+/*!40000 ALTER TABLE `t_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_user`
+--
+
+DROP TABLE IF EXISTS `t_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `t_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `avatar` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `nickname` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_user`
+--
+
+LOCK TABLES `t_user` WRITE;
+/*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
+INSERT INTO `t_user` VALUES (1,'tt','2022-02-10 00:00:00.000000','s20020515','摇摇猪','tom20020515',1,'2022-02-11 00:00:00.000000','root');
+/*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-02-11 21:03:38
