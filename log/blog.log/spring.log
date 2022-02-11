@@ -20375,3 +20375,25 @@ Caused by: java.lang.NullPointerException: null
 2022-02-11 21:24:18.463  INFO 46784 --- [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-02-11 21:24:18.474  INFO 46784 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-02-11 21:24:18.508  INFO 46784 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-02-11 21:24:34.507  INFO 46784 --- [restartedMain] com.blog.BlogApplication                 : Starting BlogApplication using Java 1.8.0_301 on LAPTOP-DU5DS6KI with PID 46784 (E:\Blog\target\classes started by 史雪涛 in E:\Blog)
+2022-02-11 21:24:34.508 DEBUG 46784 --- [restartedMain] com.blog.BlogApplication                 : Running with Spring Boot v2.6.3, Spring v5.3.15
+2022-02-11 21:24:34.508  INFO 46784 --- [restartedMain] com.blog.BlogApplication                 : No active profile set, falling back to default profiles: default
+2022-02-11 21:24:34.907  INFO 46784 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-11 21:24:34.978  INFO 46784 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 5 JPA repository interfaces.
+2022-02-11 21:24:35.242  INFO 46784 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-02-11 21:24:35.243  INFO 46784 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-02-11 21:24:35.244  INFO 46784 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-02-11 21:24:35.317  INFO 46784 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2022-02-11 21:24:35.318  INFO 46784 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 806 ms
+2022-02-11 21:24:35.408  INFO 46784 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-11 21:24:35.411  INFO 46784 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2022-02-11 21:24:35.419  INFO 46784 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2022-02-11 21:24:35.419  INFO 46784 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2022-02-11 21:24:35.566  INFO 46784 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-11 21:24:35.566  INFO 46784 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-11 21:24:36.004  WARN 46784 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-11 21:24:36.130  INFO 46784 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2022-02-11 21:24:36.269  INFO 46784 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-02-11 21:24:36.283  INFO 46784 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2022-02-11 21:24:36.287  INFO 46784 --- [restartedMain] com.blog.BlogApplication                 : Started BlogApplication in 1.868 seconds (JVM running for 1799.222)
+2022-02-11 21:24:36.288  INFO 46784 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
